@@ -1,4 +1,5 @@
 import Header from "components/Header"
+import PostBox from "components/PostBox"
 import Head from "next/head"
 import Image from "next/image"
 
@@ -8,6 +9,7 @@ export default function Home() {
       <Head>
         <title>Rgreenit </title>
       </Head>
+      <PostBox />
     </div>
   )
 }
