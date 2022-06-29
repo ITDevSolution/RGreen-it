@@ -8,7 +8,6 @@ export default function Home() {
       <Head>
         <title>Rgreenit </title>
       </Head>
-      <Header />
     </div>
   )
 }

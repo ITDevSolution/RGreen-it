@@ -15,8 +15,13 @@ import {
   SpeakerphoneIcon,
   VideoCameraIcon,
 } from "@heroicons/react/outline"
+import { signIn, signOut, useSession } from "next-auth/react"
 
 function Header() {
+  const { data: session, status } = useSession()
+
+  if (status !== "authenticated") return null
+
   return (
     <div className="sticky top-0 z-50 flex bg-white px-4 py-2 shadow-sm">
       {/* logo */}
@@ -60,18 +65,43 @@ function Header() {
       </div>
 
       {/* Sign in / Sign Out button */}
-      <div className="hidden lg:flex items-center space-x-2 border border-gray-100 p-2 cursor-pointer">
-        {/* wrap Image */}
-        <div className="relative h-5 w-5 flex-shrink-0">
-          <Image
-            src={`https://res.cloudinary.com/joeloff-dev/image/upload/v1656522740/reddit-icon-robot_sell1a.png`}
-            layout="fill"
-            objectFit="contain"
-          />
+      {session ? (
+        <div
+          onClick={() => signOut()}
+          className="hidden lg:flex items-center space-x-2 border border-gray-100 p-2 cursor-pointer"
+        >
+          {/* wrap Image */}
+          <div className="relative h-5 w-5 flex-shrink-0">
+            <Image
+              src={`https://res.cloudinary.com/joeloff-dev/image/upload/v1656522740/reddit-icon-robot_sell1a.png`}
+              layout="fill"
+              objectFit="contain"
+            />
+          </div>
+          {/* text signin */}
+          <div className="flex-1 text-xs">
+            <p className="truncate">{session?.user?.name}</p>
+            <p className="text-gray-400">1 Karma</p>
+          </div>
+          <ChevronDownIcon className="h-5 flex-shrink-0 text-gray-400" />
         </div>
-        {/* text signin */}
-        <p className="text-gray-400">Sign in</p>
-      </div>
+      ) : (
+        <div
+          onClick={() => signIn()}
+          className="hidden lg:flex items-center space-x-2 border border-gray-100 p-2 cursor-pointer"
+        >
+          {/* wrap Image */}
+          <div className="relative h-5 w-5 flex-shrink-0">
+            <Image
+              src={`https://res.cloudinary.com/joeloff-dev/image/upload/v1656522740/reddit-icon-robot_sell1a.png`}
+              layout="fill"
+              objectFit="contain"
+            />
+          </div>
+          {/* text signin */}
+          <p className="text-gray-400">Sign in</p>
+        </div>
+      )}
     </div>
   )
 }
