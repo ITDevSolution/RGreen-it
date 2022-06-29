@@ -1,5 +1,6 @@
 import NextAuth from "next-auth"
 import EmailProvider from "next-auth/providers/email"
+import RedditProvider from "next-auth/providers/reddit"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import prisma from "lib/prisma"
 
@@ -8,6 +9,10 @@ export default NextAuth({
     EmailProvider({
       server: process.env.EMAIL_SERVER,
       from: process.env.EMAIL_FROM,
+    }),
+    RedditProvider({
+      clientId: process.env.REDDIT_CLIENT_ID,
+      clientSecret: process.env.REDDIT_CLIENT_SECRET,
     }),
   ],
 
