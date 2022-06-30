@@ -12,6 +12,7 @@ import Avatar from "./Avatar"
 import TimeAgo from "react-timeago"
 
 function Post({ post }) {
+  console.log(post)
   return (
     <div className="flex cursor-pointer rounded-md border border-gray-300 bg-white shadow-sm hover:border hover:border-gray-600 ">
       {/* Votes */}
@@ -36,7 +37,10 @@ function Post({ post }) {
         </div>
 
         {/* Body */}
-
+        <div className="py-4">
+          <h2 className="text-xl font-semibold"> {post.title}</h2>
+          <p className="mt-2 text-sm font-light">{post.content}</p>
+        </div>
         {/* Image */}
 
         {/* Footer */}
