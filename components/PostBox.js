@@ -14,8 +14,16 @@ function PostBox() {
     watch,
     formState: { errors },
   } = useForm()
+
+  const onSubmit = handleSubmit(async (formData) => {
+    console.log(formData)
+  })
+
   return (
-    <form className="z-50 rounded-md border border-gray-300 bg-white p-2">
+    <form
+      onSubmit={onSubmit}
+      className="z-50 rounded-md border border-gray-300 bg-white p-2"
+    >
       <div className="flex items-center space-x-3">
         {/* Avatar */}
         <Avatar />
@@ -76,7 +84,7 @@ function PostBox() {
           )}
 
           {/* Erros */}
-          {Object.keys(errors).lentgth > 0 && (
+          {Object.keys(errors).length > 0 && (
             <div className="space-y-2 p-2 text-red-500 ">
               {errors.postTitle?.type === "required" && (
                 <p>A post title is required</p>
