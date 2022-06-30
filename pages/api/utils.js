@@ -57,6 +57,7 @@ export default async function handler(req, res) {
             " " +
             faker.hacker.noun(),
           content: faker.hacker.phrase(),
+          image: faker.image.image(640, 480, true),
           subreddit: {
             connect: {
               name: subreddit.name,
