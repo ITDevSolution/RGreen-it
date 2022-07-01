@@ -1,10 +1,12 @@
 import React from "react"
 import Post from "./Post"
 
-function Feed({ posts }) {
+function Feed({ postsComment }) {
+  if (!postsComment) return null
+
   return (
-    <div>
-      {posts?.map((post) => (
+    <div className="mt-5 space-y-4">
+      {postsComment?.map((post) => (
         <Post key={post.id} post={post} />
       ))}
     </div>
