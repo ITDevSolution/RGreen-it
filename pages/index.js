@@ -7,7 +7,7 @@ import Head from "next/head"
 import { getPostsComment } from "lib/data"
 import prisma from "lib/prisma"
 
-export default function Home({ postsComment }) {
+export default function Home({ posts }) {
   return (
     <div className="max-w-5xl my-7 lg:mx-auto sm:mx-4">
       <Head>
@@ -15,19 +15,19 @@ export default function Home({ postsComment }) {
       </Head>
       <PostBox />
       <div className="flex">
-        <Feed postsComment={postsComment} />
+        <Feed posts={posts} />
       </div>
     </div>
   )
 }
 
 export async function getServerSideProps() {
-  let postsComment = await getPostsComment(prisma)
-  postsComment = JSON.parse(JSON.stringify(postsComment))
+  let posts = await getPostsComment(prisma)
+  posts = JSON.parse(JSON.stringify(posts))
 
   return {
     props: {
-      postsComment,
+      posts,
     },
   }
 }

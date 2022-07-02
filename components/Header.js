@@ -16,19 +16,22 @@ import {
   VideoCameraIcon,
 } from "@heroicons/react/outline"
 import { signIn, signOut, useSession } from "next-auth/react"
+import Link from "next/link"
 
 function Header() {
   const { data: session, status } = useSession()
 
   return (
-    <div className="sticky top-0 z-50 flex bg-white px-4 py-2 shadow-sm">
+    <div className="sticky top-0 z-50 flex bg-white px-4 py-2 shadow-sm items-center">
       {/* logo */}
       <div className="relative h-10 w-20 flex-shrink-0 cursor-pointer">
-        <Image
-          src={`https://res.cloudinary.com/joeloff-dev/image/upload/v1656506700/Reddit_logo_new.svg_mxmb5x.png`}
-          layout="fill"
-          objectFit="contain"
-        />
+        <Link href={`/`}>
+          <Image
+            src={`https://res.cloudinary.com/joeloff-dev/image/upload/v1656506700/Reddit_logo_new.svg_mxmb5x.png`}
+            layout="fill"
+            objectFit="contain"
+          />
+        </Link>
       </div>
       {/* Home */}
       <div className="mx-7 flex items-center xl:min-w-[300px]">

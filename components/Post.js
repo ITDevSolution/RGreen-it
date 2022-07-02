@@ -11,6 +11,8 @@ import {
 import Avatar from "./Avatar"
 import TimeAgo from "react-timeago"
 
+import Link from "next/link"
+
 function Post({ post }) {
   return (
     <div className="flex cursor-pointer rounded-md border border-gray-300 bg-white shadow-sm hover:border hover:border-gray-600 ">
@@ -27,9 +29,11 @@ function Post({ post }) {
         <div className="flex items-center space-x-2">
           <Avatar seed={post?.subredditName} />
           <p className="text-gray-400 text-xs">
-            <span className="text-black font-bold hover:text-blue-400 hover:underline">
-              r/{post?.subredditName}
-            </span>{" "}
+            <Link href={`/r/${post?.subredditName}`}>
+              <a className="text-black font-bold hover:text-blue-400 hover:underline">
+                r/{post?.subredditName}
+              </a>
+            </Link>{" "}
             • Posted by u/
             {post.author.name} <TimeAgo date={post.createdAt} />
           </p>
