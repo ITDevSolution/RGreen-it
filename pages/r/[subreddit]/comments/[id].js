@@ -15,6 +15,7 @@ import TimeAgo from "react-timeago"
 
 import Link from "next/link"
 import Post from "components/Post"
+import NewComment from "components/NewComment"
 
 export default function SinglePost({ subreddit, post }) {
   //   if (!post)
@@ -83,6 +84,20 @@ export default function SinglePost({ subreddit, post }) {
           </div>
         </div>
       </div>
+      <NewComment post={post} />
+
+      {/* List comments */}
+      {/* <div>
+        <hr />
+        {post?.comments.map((comment)=> (
+          <div>
+            <hr />
+            <div>
+              <Avatar sedd={comment.username}
+            </div>
+          </div>
+        ))}
+      </div> */}
     </div>
   )
 }
