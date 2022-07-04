@@ -11,11 +11,12 @@ import {
   ShareIcon,
 } from "@heroicons/react/outline"
 import Avatar from "components/Avatar"
-import TimeAgo from "react-timeago"
+import timeago from "lib/timeago"
 
 import Link from "next/link"
 import Post from "components/Post"
 import NewComment from "components/NewComment"
+import Comments from "components/Comments"
 
 export default function SinglePost({ subreddit, post }) {
   //   if (!post)
@@ -48,7 +49,7 @@ export default function SinglePost({ subreddit, post }) {
                 </a>
               </Link>{" "}
               • Posted by u/
-              {post.author.name} <TimeAgo date={post.createdAt} />
+              {post.author.name} {timeago.format(new Date(post.createdAt))}
             </p>
           </div>
 
@@ -87,17 +88,11 @@ export default function SinglePost({ subreddit, post }) {
       <NewComment post={post} />
 
       {/* List comments */}
-      {/* <div>
-        <hr />
-        {post?.comments.map((comment)=> (
-          <div>
-            <hr />
-            <div>
-              <Avatar sedd={comment.username}
-            </div>
-          </div>
-        ))}
-      </div> */}
+      {/* <Comments comments={post.comments} /> */}
+      <div className="-my-5 rounded-b-md border-t-0 border-gray-300 bg-white py-5 px-10">
+        <hr className="py-2" />
+        <Comments comments={post.comments} />
+      </div>
     </div>
   )
 }

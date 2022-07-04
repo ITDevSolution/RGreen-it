@@ -27,11 +27,11 @@ export default function NewComment({ post }) {
       method: "POST",
     })
 
+    router.reload(window.location.pathname)
+
     toast.success("comment Sucessfully", {
       id: notification,
     })
-    setContent("")
-    // router.reload(window.location.pathname)
   }
 
   return (
@@ -42,7 +42,6 @@ export default function NewComment({ post }) {
 
       <form onSubmit={onSubmitComment} className="flex flex-col space-y-2">
         <textarea
-          value={content}
           onChange={(e) => setContent(e.target.value)}
           disabled={!session}
           className="h-24 rounded-md border border-gray-200 p-2 pl-4 outline-none disabled:bg-gray-50"

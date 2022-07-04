@@ -15,12 +15,12 @@ import Link from "next/link"
 import { Jelly } from "@uiball/loaders"
 
 function Post({ post }) {
-  if (!post)
-    return (
-      <div className="flex w-full items-center justify-center p-10 text-xl">
-        <Jelly size={50} color="#FF4501" />
-      </div>
-    )
+  // if (!post)
+  //   return (
+  //     <div className="flex w-full items-center justify-center p-10 text-xl">
+  //       <Jelly size={50} color="#FF4501" />
+  //     </div>
+  //   )
 
   return (
     <Link href={`/r/${post.subredditName}/comments/${post.id}`}>
