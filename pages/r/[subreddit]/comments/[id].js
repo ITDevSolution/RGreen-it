@@ -1,5 +1,5 @@
 import prisma from "lib/prisma"
-import { getPost, getSubreddit } from "lib/data"
+import { getPost, getSubreddit, getVote, getVotes } from "lib/data"
 
 import {
   ArrowDownIcon,
@@ -14,17 +14,42 @@ import Avatar from "components/Avatar"
 import timeago from "lib/timeago"
 
 import Link from "next/link"
-import Post from "components/Post"
+// import Post from "components/Post"
 import NewComment from "components/NewComment"
 import Comments from "components/Comments"
 
-export default function SinglePost({ subreddit, post }) {
-  //   if (!post)
-  //     return (
-  //       <div className="flex w-full items-center justify-center p-10 text-xl">
-  //         <Jelly size={50} color="#FF4501" />
-  //       </div>
-  //     )
+import { useSession, getSession } from "next-auth/react"
+import toast, { Toaster } from "react-hot-toast"
+import { useRouter } from "next/router"
+
+export default function SinglePost({ subreddit, post, votes, vote }) {
+  const { data: session } = useSession()
+  const router = useRouter()
+
+  const upVote = async (isUpvote) => {
+    if (!session) {
+      alert("! You'll need to sign in to Vote! ")
+    }
+
+    await fetch("/api/vote", {
+      body: JSON.stringify({
+        post: post.id,
+        up: isUpvote,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    })
+    router.reload(window.location.pathname)
+  }
+
+  if (!post)
+    return (
+      <div className="flex w-full items-center justify-center p-10 text-xl">
+        <Jelly size={50} color="#FF4501" />
+      </div>
+    )
   if (!post) return <p className="text-center p-5">Post does not exist 😟 </p>
 
   return (
@@ -32,10 +57,21 @@ export default function SinglePost({ subreddit, post }) {
       <div className="flex cursor-pointer rounded-md border border-gray-300 bg-white shadow-sm hover:border hover:border-gray-600 ">
         {/* Votes */}
         <div className="flex flex-col items-center justify-start space-y-1 rounded-l-md bg-gray-50 p-4 text-gray-400 ">
-          <ArrowUpIcon className="voteButtons hover:text-red-400" />
-          <p className="text-black font-bold text-xs">0</p>
-          <ArrowDownIcon className="voteButtons hover:text-blue-400" />
+          <ArrowUpIcon
+            onClick={() => upVote(true)}
+            className={`voteButtons hover:text-red-400 ${
+              vote.up && "text-red-400"
+            }`}
+          />
+          <p className="text-black font-bold text-xs">{votes}</p>
+          <ArrowDownIcon
+            onClick={() => upVote(false)}
+            className={`voteButtons hover:text-blue-400 ${
+              vote.up === false && "text-blue-400"
+            }`}
+          />
         </div>
+        {/* <Toaster /> */}
 
         {/* Post template */}
         <div className="p-3 pb-1">
@@ -97,16 +133,31 @@ export default function SinglePost({ subreddit, post }) {
   )
 }
 
-export async function getServerSideProps({ params }) {
-  const subreddit = await getSubreddit(params.subreddit, prisma)
+export async function getServerSideProps(context) {
+  const session = await getSession(context)
 
-  let post = await getPost(parseInt(params.id), prisma)
+  const subreddit = await getSubreddit(context.params.subreddit, prisma)
+
+  let post = await getPost(parseInt(context.params.id), prisma)
   post = JSON.parse(JSON.stringify(post))
+
+  // all votes
+  let votes = await getVotes(parseInt(context.params.id), prisma)
+  votes = JSON.parse(JSON.stringify(votes))
+
+  let vote = await getVote(
+    parseInt(context.params.id),
+    session?.user.id,
+    prisma
+  )
+  vote = JSON.parse(JSON.stringify(vote))
 
   return {
     props: {
       subreddit,
       post,
+      votes,
+      vote,
     },
   }
 }
