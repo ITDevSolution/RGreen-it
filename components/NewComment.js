@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react"
 import { useState } from "react"
 import { useRouter } from "next/router"
 
-import toast, { Toaster } from "react-hot-toast"
+import toast from "react-hot-toast"
 
 export default function NewComment({ post }) {
   const router = useRouter()
@@ -57,7 +57,6 @@ export default function NewComment({ post }) {
         >
           Comment
         </button>
-        <Toaster />
       </form>
     </div>
   )

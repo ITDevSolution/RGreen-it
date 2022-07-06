@@ -3,8 +3,12 @@ import { useState } from "react"
 import Avatar from "./Avatar"
 import { LinkIcon, PhotographIcon } from "@heroicons/react/outline"
 import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
+import { useRouter } from "next/router"
 
-function PostBox({ subreddit }) {
+function PostBox({ subreddits, subreddit }) {
+  const [select, setSelect] = useState(subreddits)
+  const router = useRouter()
   const { data: session } = useSession()
   const [imageBoxOpen, setImageBoxOpen] = useState(false)
   const {
@@ -17,6 +21,135 @@ function PostBox({ subreddit }) {
 
   const onSubmit = handleSubmit(async (formData) => {
     console.log(formData)
+    const notification = toast.loading("Creating new post...")
+    const subredditExists = select?.length > 0
+    console.log(subredditExists)
+
+    if (!subredditExists) {
+      //create subreddit...
+      // console.log("Subreddit is new! -> creastinga New subreddit")
+      // const newSubreddit = await fetch("/api/subreddit", {
+      //   body: JSON.stringify({
+      //     name: formData.name,
+      //   }),
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   method: "POST",
+      // })
+
+      console.log("Creating post...", formData)
+
+      const image = formData.postImage || ""
+
+      const newPost = await fetch("/api/post", {
+        body: JSON.stringify({
+          title: formData.postTitle,
+          content: formData.postBody,
+          image: image,
+          subredditName: subreddit.name,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+      })
+      console.log("New post add", newPost)
+    } else {
+      //use existing subreddit...
+      console.log("Using existing subreddit!")
+      console.log(subreddits)
+
+      const image = formData.postImage || ""
+
+      const newPost = await fetch("/api/post", {
+        body: JSON.stringify({
+          title: formData.postTitle,
+          content: formData.postBody,
+          image: image,
+          subredditName: formData.subreddit || subreddit.name,
+        }),
+        headers: {
+          "Content-type": "application/json",
+        },
+        method: "POST",
+      })
+      console.log("New post added:", newPost)
+    }
+    // After the post has been added!
+    setValue("postBody", "")
+    setValue("postImage", "")
+    setValue("postTitle", "")
+    setValue("subreddit", "")
+
+    toast.success("New post Created!", {
+      id: notification,
+    })
+    router.push(`/r/${formData.subreddit || subreddit.name}`)
+
+    try {
+      // const subredditExists = select.length > 0
+      // console.log(subredditExists)
+      // if (!subredditExists) {
+      //   //create subreddit...
+      //   console.log("Subreddit is new! -> creastinga New subreddit")
+      //   const newSubreddit = await fetch("/api/subreddit", {
+      //     body: JSON.stringify({
+      //       name: formData.name,
+      //     }),
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     method: "POST",
+      //   })
+      //   console.log("Creating post...", formData)
+      //   const image = formData.postImage || ""
+      //   const newPost = await fetch("/api/post", {
+      //     body: JSON.stringify({
+      //       title: formData.title,
+      //       content: formData.postBody,
+      //       image: image,
+      //       subreddit_name: newSubreddit.name || subreddit.name,
+      //     }),
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     method: "POST",
+      //   })
+      //   console.log("New post add", newPost)
+      // } else {
+      //   //use existing subreddit...
+      //   console.log("Using existing subreddit!")
+      //   console.log(subreddits)
+      //   const image = formData.postImage || ""
+      //   const newPost = await fetch("/api/post", {
+      //     body: JSON.stringify({
+      //       title: formData.postTitle,
+      //       content: formData.postBody,
+      //       image: image,
+      //       subredditName: formData.subreddit || subreddit.name,
+      //     }),
+      //     headers: {
+      //       "Content-type": "application/json",
+      //     },
+      //     method: "POST",
+      //   })
+      //   console.log("New post added:", newPost)
+      // }
+      // // After the post has been added!
+      // setValue("postBody", "")
+      // setValue("postImage", "")
+      // setValue("postTitle", "")
+      // setValue("subreddit", "")
+      // toast.success("New post Created!", {
+      //   id: notification,
+      // })
+      // router.push(`/r/${formData.subreddit}`)
+    } catch (error) {
+      // toast.error("Whoops something went wrong!", {
+      //   id: notification,
+      // })
+    }
   })
 
   return (
@@ -68,12 +201,23 @@ function PostBox({ subreddit }) {
           {!subreddit && (
             <div className="flex items-center px-2">
               <p className="min-w-[90px]">Subreddit:</p>
-              <input
+              {/* <input
                 className="m-2 flex-1 bg-blue-50 p-2 outline-none"
                 {...register("subreddit", { required: true })}
                 type="text"
                 placeholder="i.e. nextjs"
-              />
+              /> */}
+              <select
+                className="m-2 flex-1 bg-blue-50 p-2 outline-none"
+                {...register("subreddit", { required: true })}
+                onChange={(e) => setSelect(e.target.value)}
+              >
+                {subreddits.map((subreddit) => (
+                  <option key={subreddit.name} value={subreddit.name}>
+                    {subreddit.name}
+                  </option>
+                ))}
+              </select>
             </div>
           )}
 
