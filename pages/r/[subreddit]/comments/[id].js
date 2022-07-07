@@ -60,14 +60,14 @@ export default function SinglePost({ subreddit, post, votes, vote }) {
           <ArrowUpIcon
             onClick={() => upVote(true)}
             className={`voteButtons hover:text-red-400 ${
-              vote.up && "text-red-400"
+              vote?.up && "text-red-400"
             }`}
           />
           <p className="text-black font-bold text-xs">{votes}</p>
           <ArrowDownIcon
             onClick={() => upVote(false)}
             className={`voteButtons hover:text-blue-400 ${
-              vote.up === false && "text-blue-400"
+              vote?.up === false && "text-blue-400"
             }`}
           />
         </div>
@@ -127,7 +127,7 @@ export default function SinglePost({ subreddit, post, votes, vote }) {
       {/* <Comments comments={post.comments} /> */}
       <div className="-my-5 rounded-b-md border-t-0 border-gray-300 bg-white py-5 px-10">
         <hr className="py-2" />
-        <Comments comments={post.comments} />
+        <Comments comments={post.comments} post={post} />
       </div>
     </div>
   )

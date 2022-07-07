@@ -4,8 +4,9 @@ import { useRouter } from "next/router"
 
 import toast from "react-hot-toast"
 
-export default function NewComment({ post }) {
+export default function NewComment({ post, comment }) {
   const router = useRouter()
+  const [cancel, setCancel] = useState(true)
   const [content, setContent] = useState("")
   const { data: session } = useSession()
 
@@ -19,6 +20,7 @@ export default function NewComment({ post }) {
     await fetch("/api/comment", {
       body: JSON.stringify({
         post: post.id,
+        comment: comment?.id,
         content: content,
       }),
       headers: {
