@@ -24,16 +24,13 @@ function Header() {
   return (
     <div className="sticky top-0 z-50 flex bg-white px-4 py-2 shadow-sm items-center">
       {/* logo */}
-      <div className="relative h-10 w-20 flex-shrink-0 cursor-pointer mr-16">
+      <div className="relative h-10 w-20 flex-shrink-0 cursor-pointer">
         <Link href={`/`}>
-          {/* <Image
+          <Image
             src={`https://res.cloudinary.com/joeloff-dev/image/upload/v1656506700/Reddit_logo_new.svg_mxmb5x.png`}
             layout="fill"
             objectFit="contain"
-          /> */}
-          <span className="bg-gradient-to-r from-pink-800 via-purple-600 to-indigo-800 bg-clip-text align-middle text-3xl font-black tracking-widest text-transparent ">
-            RGreenit
-          </span>
+          />
         </Link>
       </div>
       {/* Home */}
