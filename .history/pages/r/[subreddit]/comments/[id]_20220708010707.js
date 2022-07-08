@@ -21,7 +21,6 @@ import Comments from "components/Comments"
 import { useSession, getSession } from "next-auth/react"
 import toast, { Toaster } from "react-hot-toast"
 import { useRouter } from "next/router"
-import { Jelly } from "@uiball/loaders"
 
 export default function SinglePost({ subreddit, post, votes, vote }) {
   const { data: session } = useSession()
