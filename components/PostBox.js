@@ -11,6 +11,10 @@ function PostBox({ subreddits, subreddit }) {
   const router = useRouter()
   const { data: session } = useSession()
   const [imageBoxOpen, setImageBoxOpen] = useState(false)
+
+  const [image, setImage] = useState(null)
+  const [imageURL, setImageURL] = useState(null)
+
   const {
     register,
     setValue,
@@ -40,45 +44,44 @@ function PostBox({ subreddits, subreddit }) {
 
       console.log("Creating post...", formData)
 
-      const image = formData.postImage || ""
+      const img = image || ""
+      console.log("estoy aqui!", subreddit.name)
 
-      const newPost = await fetch("/api/post", {
-        body: JSON.stringify({
-          title: formData.postTitle,
-          content: formData.postBody,
-          image: image,
-          subredditName: subreddit.name,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const body = new FormData()
+      body.append("image", image)
+      body.append("title", formData.postTitle)
+      body.append("content", formData.postBody)
+      body.append("subredditName", subreddit.name)
+
+      const res = await fetch("/api/post", {
+        body,
         method: "POST",
       })
-      console.log("New post add", newPost)
+
+      console.log("New post add", res)
     } else {
       //use existing subreddit...
       console.log("Using existing subreddit!")
       console.log(subreddits)
 
-      const image = formData.postImage || ""
+      const img = image || ""
 
-      const newPost = await fetch("/api/post", {
-        body: JSON.stringify({
-          title: formData.postTitle,
-          content: formData.postBody,
-          image: image,
-          subredditName: formData.subreddit || subreddit.name,
-        }),
-        headers: {
-          "Content-type": "application/json",
-        },
+      const body = new FormData()
+
+      body.append("image", image)
+      body.append("title", formData.postTitle)
+      body.append("content", formData.postBody)
+      body.append("subredditName", formData.subreddit)
+
+      const res = await fetch("/api/post", {
+        body,
         method: "POST",
       })
-      console.log("New post added:", newPost)
+      console.log("New post added:", res)
     }
     // After the post has been added!
     setValue("postBody", "")
-    setValue("postImage", "")
+    // setValue("postImage", "")
     setValue("postTitle", "")
     setValue("subreddit", "")
 
@@ -225,10 +228,22 @@ function PostBox({ subreddits, subreddit }) {
           {imageBoxOpen && (
             <div className="flex items-center px-2">
               <p className="min-w-[90px]">Image URL:</p>
+              <img src={imageURL} />
               <input
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    if (e.target.files[0].size > 3072000) {
+                      alert("Maximum size allowed is 3MB")
+                      return false
+                    }
+                    setImage(e.target.files[0])
+                    setImageURL(URL.createObjectURL(e.target.files[0]))
+                  }
+                }}
                 className="m-2 flex-1 bg-blue-50 p-2 outline-none"
-                {...register("postImage")}
-                type="text"
+                name="image"
+                type="file"
+                accept="image/*"
                 placeholder="optional..."
               />
             </div>
