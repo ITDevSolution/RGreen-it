@@ -22,31 +22,30 @@ function Header() {
   const { data: session, status } = useSession()
 
   return (
-    <div className="sticky inset-x-0 top-0 z-50 flex items-center justify-between bg-white px-4 py-2 shadow-sm  ">
+    <div className="sticky top-0 z-50 flex bg-white px-4 py-2 shadow-sm items-center">
       {/* logo */}
-      <div className="flex grow-0 basis-1/4 h-10 w-20 flex-shrink-0 cursor-pointer mr-16 md:justify-start justify-center ">
+      <div className="flex grow-0 basis-1/3 h-10 w-20 flex-shrink-0 cursor-pointer mr-16 md:justify-start ">
         <Link href={`/`}>
           {/* <Image
             src={`https://res.cloudinary.com/joeloff-dev/image/upload/v1656506700/Reddit_logo_new.svg_mxmb5x.png`}
             layout="fill"
             objectFit="contain"
           /> */}
-          <a className="my-auto flex w-[140px] md:ml-0">
+          <a>
             <span className="bg-gradient-to-r from-pink-800 via-purple-600 to-indigo-800 bg-clip-text align-middle text-3xl font-black tracking-widest text-transparent ">
               RGreenit
             </span>
           </a>
         </Link>
-        {/* Home */}
-        <div className="hidden mx-7 md:flex md:ml-2 gap-2 items-center md:px-7">
-          <HomeIcon className="h-5 w-5" />
-          <p className="ml-2 hidden flex-1 lg:inline">Home</p>
-          <ChevronDownIcon className="h-5 w-5" />
-        </div>
       </div>
-
+      {/* Home */}
+      <div className="mx-7 flex items-center xl:min-w-[300px]">
+        <HomeIcon className="h-5 w-5" />
+        <p className="ml-2 hidden flex-1 lg:inline">Home</p>
+        <ChevronDownIcon className="h-5 w-5" />
+      </div>
       {/* Search box */}
-      <form className="hidden md:flex md:flex-1 items-center space-x-2 rounded-sm border border-gray-200 bg-gray-100 px-3 py-1 ">
+      <form className="flex flex-1 items-center space-x-2 rounded-sm border border-gray-200 bg-gray-100 px-3 py-1 ">
         <SearchIcon className="h-6 w-6 text-gray-400" />
         <input
           type="text"
@@ -67,7 +66,7 @@ function Header() {
         <SpeakerphoneIcon className="icon" />
       </div>
       {/* Menu mobile */}
-      <div className="flex lg:hidden pl-4">
+      <div className="ml-5 flex items-center lg:hidden">
         <MenuIcon className="icon" />
       </div>
 

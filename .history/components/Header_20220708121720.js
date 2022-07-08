@@ -22,16 +22,20 @@ function Header() {
   const { data: session, status } = useSession()
 
   return (
-    <div className="sticky inset-x-0 top-0 z-50 flex items-center justify-between bg-white px-4 py-2 shadow-sm  ">
+    <div className="sticky top-0 z-50 flex bg-white px-4 py-2 shadow-sm items-center justify-between">
+      {/* Menu mobile */}
+      <div className="ml-5 flex items-center lg:hidden">
+        <MenuIcon className="icon" />
+      </div>
       {/* logo */}
-      <div className="flex grow-0 basis-1/4 h-10 w-20 flex-shrink-0 cursor-pointer mr-16 md:justify-start justify-center ">
+      <div className="flex grow-0 basis-1/3 h-10 w-20 flex-shrink-0 cursor-pointer mr-16 md:justify-start justify-center ">
         <Link href={`/`}>
           {/* <Image
             src={`https://res.cloudinary.com/joeloff-dev/image/upload/v1656506700/Reddit_logo_new.svg_mxmb5x.png`}
             layout="fill"
             objectFit="contain"
           /> */}
-          <a className="my-auto flex w-[140px] md:ml-0">
+          <a className="my-auto flex w-[140px] md:ml-0 ">
             <span className="bg-gradient-to-r from-pink-800 via-purple-600 to-indigo-800 bg-clip-text align-middle text-3xl font-black tracking-widest text-transparent ">
               RGreenit
             </span>
@@ -65,10 +69,6 @@ function Header() {
         <BellIcon className="icon" />
         <PlusIcon className="icon" />
         <SpeakerphoneIcon className="icon" />
-      </div>
-      {/* Menu mobile */}
-      <div className="flex lg:hidden pl-4">
-        <MenuIcon className="icon" />
       </div>
 
       {/* Sign in / Sign Out button */}

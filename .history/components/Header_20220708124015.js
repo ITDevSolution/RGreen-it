@@ -24,7 +24,7 @@ function Header() {
   return (
     <div className="sticky inset-x-0 top-0 z-50 flex items-center justify-between bg-white px-4 py-2 shadow-sm  ">
       {/* logo */}
-      <div className="flex grow-0 basis-1/4 h-10 w-20 flex-shrink-0 cursor-pointer mr-16 md:justify-start justify-center ">
+      <div className="flex grow-0 basis-1/3 h-10 w-20 flex-shrink-0 cursor-pointer mr-16 md:justify-start justify-center ">
         <Link href={`/`}>
           {/* <Image
             src={`https://res.cloudinary.com/joeloff-dev/image/upload/v1656506700/Reddit_logo_new.svg_mxmb5x.png`}
@@ -38,11 +38,6 @@ function Header() {
           </a>
         </Link>
         {/* Home */}
-        <div className="hidden mx-7 md:flex md:ml-2 gap-2 items-center md:px-7">
-          <HomeIcon className="h-5 w-5" />
-          <p className="ml-2 hidden flex-1 lg:inline">Home</p>
-          <ChevronDownIcon className="h-5 w-5" />
-        </div>
       </div>
 
       {/* Search box */}

@@ -158,7 +158,7 @@ function PostBox({ subreddits, subreddit }) {
   return (
     <form
       onSubmit={onSubmit}
-      className="z-50 rounded-md border border-gray-300 bg-white p-2 inset-x-0"
+      className="z-50 rounded-md border border-gray-300 bg-white p-2"
     >
       <div className="flex items-center space-x-3">
         {/* Avatar */}

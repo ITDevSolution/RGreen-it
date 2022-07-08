@@ -24,7 +24,7 @@ function Header() {
   return (
     <div className="sticky inset-x-0 top-0 z-50 flex items-center justify-between bg-white px-4 py-2 shadow-sm  ">
       {/* logo */}
-      <div className="flex grow-0 basis-1/4 h-10 w-20 flex-shrink-0 cursor-pointer mr-16 md:justify-start justify-center ">
+      <div className="flex grow-0 basis-1/5 h-10 w-20 flex-shrink-0 cursor-pointer mr-16 md:justify-start justify-center ">
         <Link href={`/`}>
           {/* <Image
             src={`https://res.cloudinary.com/joeloff-dev/image/upload/v1656506700/Reddit_logo_new.svg_mxmb5x.png`}
