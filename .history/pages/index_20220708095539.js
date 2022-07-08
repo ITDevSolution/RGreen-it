@@ -10,9 +10,9 @@ import {
   getSubredditListLimit,
 } from "lib/data"
 import prisma from "lib/prisma"
-import SubredditRow from "components/SubredditRow"
 
 export default function Home({ posts, subreddits, top10subreddit }) {
+  
   return (
     <div className="max-w-5xl my-7 lg:mx-auto sm:mx-4">
       <Head>
@@ -24,12 +24,12 @@ export default function Home({ posts, subreddits, top10subreddit }) {
 
         <div className="sticky top-36 mx-5 mt-5 hidden h-fit min-w-[300px] rounded-md border border-gray bg-white lg:inline ">
           <p className="text-md mb-1 p-4 pb-3 font-bold">Top Communities</p>
-
+          
           {/* List subreddits */}
           <div>
-            {top10subreddit?.map((subreddit, index) => (
-              <SubredditRow key={index} topic={subreddit.name} index={index} />
-            ))}
+          {top10subreddit?.map((subreddit)=> (
+
+          ))}
           </div>
         </div>
       </div>

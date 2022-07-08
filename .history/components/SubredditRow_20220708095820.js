@@ -1,0 +1,7 @@
+import React from "react"
+
+export default function SubredditRow({ index, topic }) {
+  return (
+    <div className="flex items-center space-x-2 border-t bg-white px-4 py-2 last:rounded-b"></div>
+  )
+}

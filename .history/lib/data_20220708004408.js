@@ -221,16 +221,3 @@ export const getPostsFromUser = async (user_name, prisma) => {
 
   return posts
 }
-
-export const getSubredditListLimit = async (prisma) => {
-  const top10subreddit = await prisma.subreddit.findMany({
-    where: {},
-    orderBy: [
-      {
-        name: "desc",
-      },
-    ],
-    take: 10,
-  })
-  return top10subreddit
-}

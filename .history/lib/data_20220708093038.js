@@ -227,10 +227,10 @@ export const getSubredditListLimit = async (prisma) => {
     where: {},
     orderBy: [
       {
-        name: "desc",
+        createdAt: "desc",
       },
     ],
-    take: 10,
+    limit: 10,
   })
   return top10subreddit
 }
