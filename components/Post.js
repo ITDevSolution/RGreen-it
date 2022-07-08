@@ -43,7 +43,12 @@ export default function Post({ post }) {
                 </a>
               </Link>{" "}
               • Posted by u/
-              {post.author.name} <TimeAgo date={post.createdAt} />
+              <Link href={`/u/${post.author.name}`}>
+                <a className="font-semibold text-gray-600 underline hover:bg-slate-600 hover:text-white">
+                  {post.author.name}
+                </a>
+              </Link>{" "}
+              <TimeAgo date={post.createdAt} />
             </p>
           </div>
 
@@ -59,7 +64,7 @@ export default function Post({ post }) {
           <div className="flex space-x-4 text-gray-400 pt-1">
             <div className="postButtons">
               <ChatAltIcon className="h-6 w-6" />
-              <p className="">{post.comments.length} Comments</p>
+              <p className="">{post?.comments?.length} Comments</p>
             </div>
             <div className="postButtons">
               <GiftIcon className="h-6 w-6" />

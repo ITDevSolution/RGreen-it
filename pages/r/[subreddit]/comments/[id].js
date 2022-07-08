@@ -85,7 +85,12 @@ export default function SinglePost({ subreddit, post, votes, vote }) {
                 </a>
               </Link>{" "}
               • Posted by u/
-              {post.author.name} {timeago.format(new Date(post.createdAt))}
+              <Link href={`/u/${post.author.name}`}>
+                <a className="font-semibold text-gray-600 underline hover:bg-slate-600 hover:text-white">
+                  {post.author.name}
+                </a>
+              </Link>
+              {timeago.format(new Date(post.createdAt))}
             </p>
           </div>
 

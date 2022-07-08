@@ -5,6 +5,7 @@ import { ChatAltIcon } from "@heroicons/react/outline"
 
 import { useState } from "react"
 import NewComment from "./NewComment"
+import Link from "next/link"
 
 export default function Comment({ comment, post }) {
   const [showReply, setShowReply] = useState(false)
@@ -17,9 +18,11 @@ export default function Comment({ comment, post }) {
 
       <div className="flex flex-col ">
         <p className="py-2 text-xs text-gray-400">
-          <span className="font-semibold text-gray-600">
-            {comment.author.name}
-          </span>{" "}
+          <Link href={`/u/${comment.author.name}`}>
+            <a className="font-semibold text-gray-600 underline hover:bg-slate-600 hover:text-white">
+              {comment.author.name}
+            </a>
+          </Link>{" "}
           • {timeago.format(new Date(comment.createdAt))}
         </p>
         <p className="">{comment.content}</p>
